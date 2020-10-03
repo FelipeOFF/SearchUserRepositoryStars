@@ -1,0 +1,35 @@
+query SearchRepositoriesStarsFromUsers($nameOfUser: String!, $count: Int = 20, $afterCursor: String) {
+  search(query: $nameOfUser, type: USER, first: $count, after: $afterCursor) {
+    userCount
+    pageInfo {
+      startCursor
+      hasNextPage
+      hasPreviousPage
+      endCursor
+    }
+    edges {
+      cursor
+      node {
+        ... on User {
+          avatarUrl
+          login
+          bio
+          location
+          email
+          url
+          starredRepositories {
+            totalCount
+            edges {
+              node {
+                name
+                description
+                stargazerCount
+                url
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
