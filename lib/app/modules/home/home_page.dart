@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'home_controller.dart';
 
@@ -20,7 +21,15 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
         title: Text(widget.title),
       ),
       body: Column(
-        children: <Widget>[],
+        children: <Widget>[
+          Observer(builder: (context) {
+            controller.getValues();
+
+            return Center(
+              child: Text("Hello World"),
+            );
+          })
+        ],
       ),
     );
   }

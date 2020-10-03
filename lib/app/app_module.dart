@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:github_repository_stars/app/app_widget.dart';
 import 'package:github_repository_stars/app/modules/home/home_module.dart';
 import 'package:github_repository_stars/app/modules/network/client/graphql_client.dart';
-import 'package:github_repository_stars/app/modules/network/dataset/git_hub_dataset.dart';
-import 'package:github_repository_stars/app/modules/network/dataset/i_git_hub_dataset.dart';
+import 'package:github_repository_stars/app/modules/repository/github_repository.dart';
+import 'package:github_repository_stars/app/modules/repository/i_github_repository.dart';
 import 'package:graphql/client.dart';
 
 class AppModule extends MainModule {
@@ -13,7 +13,7 @@ class AppModule extends MainModule {
   List<Bind> get binds => [
         Bind((i) => AppController()),
         Bind<GraphQLClient>((i) => GraphqlClient().getClient()),
-        Bind<IGitHubDataset>((i) => GitHubDataset(i.get())),
+        Bind<IGithubRepository>((i) => GithubRepository(i.get()))
       ];
 
   @override
