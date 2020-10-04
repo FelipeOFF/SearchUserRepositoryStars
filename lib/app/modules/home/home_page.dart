@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:github_repository_stars/app/modules/home/coponents/git_hub_app_bar.dart';
 import 'package:github_repository_stars/app/modules/model/query_repository_stars.dart';
 import 'home_controller.dart';
 
