@@ -1,16 +1,14 @@
-# github_repository_stars
+# Stars Repository
 
-'A new Flutter project. Created by Slidy'
+This is a project made to consume the github graphql API, in it I'm looking for a user, typed in a text field and then I'm looking for the repositories that this user favored
 
-## Getting Started
+## Features
 
-This project is a starting point for a Flutter application.
+- Mobx
+- Grphql
+- Flutter Modular
+- GQL (para poder importar a query)
+- Mockito (dev)
+- Build Runner (dev)
+- Flutter Test (dev)
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
