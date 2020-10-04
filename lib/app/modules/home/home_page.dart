@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:github_repository_stars/app/modules/home/coponents/git_hub_app_bar.dart';
 import 'package:github_repository_stars/app/modules/model/query_repository_stars.dart';
 import 'home_controller.dart';
 
@@ -16,10 +17,8 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
 
   @override
   Widget build(BuildContext context) {
-    controller.search("FelipeOFF");
-
     return Scaffold(
-      appBar: AppBar(),
+      appBar: getGithubAppBar(),
       body: Observer(builder: (context) {
         if (controller.showLoading) {
           return Center(
@@ -44,4 +43,18 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
       }),
     );
   }
+
+  AppBar getGithubAppBar() => AppBar(
+        title: Text("Github search stars"),
+        actions: [
+          IconButton(
+            icon: Icon(
+              Icons.search,
+              semanticLabel: "Buscar",
+              color: Colors.white,
+            ),
+            onPressed: () {},
+          ),
+        ],
+      );
 }
