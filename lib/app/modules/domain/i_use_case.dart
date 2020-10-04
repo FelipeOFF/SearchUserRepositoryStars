@@ -8,9 +8,9 @@ abstract class IUseCase<PARAM, RESULT> {
   Stream<IResultWrapper<RESULT>> call(PARAM value) async* {
     yield Loading();
     try {
-      yield Success(await execute(value), usecaseCalled: this);
+      yield Success(await execute(value));
     } catch (e) {
-      yield Failure(e, usecaseCalled: this);
+      yield Failure(e);
     } finally {
       yield DismissLoading();
     }

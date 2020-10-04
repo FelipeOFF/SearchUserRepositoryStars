@@ -1,3 +1,4 @@
+import 'package:github_repository_stars/app/modules/base/controller/base_controller_controller.dart';
 import 'package:github_repository_stars/app/app_controller.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +12,7 @@ import 'package:graphql/client.dart';
 class AppModule extends MainModule {
   @override
   List<Bind> get binds => [
+        Bind((i) => BaseControllerController()),
         Bind((i) => AppController()),
         Bind<GraphQLClient>((i) => GraphqlClient().getClient()),
         Bind<IGithubRepository>((i) => GithubRepository(i.get()))

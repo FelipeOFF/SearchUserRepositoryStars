@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:github_repository_stars/app/modules/model/query_repository_stars.dart';
 import 'home_controller.dart';
 
 class HomePage extends StatefulWidget {
@@ -16,21 +17,34 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
 
   @override
   Widget build(BuildContext context) {
+    controller.search("FelipeOFF");
+
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Column(
-        children: <Widget>[
-          Observer(builder: (context) {
-            controller.getValues();
+      body: Observer(builder: (context) {
+        if (controller.showLoading) {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        } else if (controller.errorMessage != null) {
+          return Center(
+            child: Text(controller.errorMessage),
+          );
+        } else if (controller.query != null) {
+          QueryGithubUserRepositoryStars query = controller.query;
+          print(query.toJson());
+        } else {
+          return Center(
+            child: Text("Opss..."),
+          );
+        }
 
-            return Center(
-              child: Text("Hello World"),
-            );
-          })
-        ],
-      ),
+        return Center(
+          child: Text("Hello World"),
+        );
+      }),
     );
   }
 }
