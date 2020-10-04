@@ -5,8 +5,7 @@ import 'package:github_repository_stars/app/modules/model/query_repository_stars
 import 'home_controller.dart';
 
 class HomePage extends StatefulWidget {
-  final String title;
-  const HomePage({Key key, this.title = "Home"}) : super(key: key);
+  const HomePage({Key key}) : super(key: key);
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -20,9 +19,7 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
     controller.search("FelipeOFF");
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
+      appBar: AppBar(),
       body: Observer(builder: (context) {
         if (controller.showLoading) {
           return Center(
