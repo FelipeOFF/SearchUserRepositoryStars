@@ -41,13 +41,29 @@ mixin _$BaseControllerController on _BaseControllerControllerBase, Store {
     });
   }
 
+  final _$_executorAsyncAction =
+      AsyncAction('_BaseControllerControllerBase._executor');
+
+  @override
+  Future<void> _executor<PARAM, RESULT>(
+      PARAM param, IUseCase<PARAM, RESULT> usecase,
+      {void Function(RESULT) onSuccess, String Function(String) onError}) {
+    return _$_executorAsyncAction.run(() => super._executor<PARAM, RESULT>(
+        param, usecase,
+        onSuccess: onSuccess, onError: onError));
+  }
+
   final _$execAsyncAction = AsyncAction('_BaseControllerControllerBase.exec');
 
   @override
-  Future exec<PARAM, RESULT>(PARAM param, IUseCase<PARAM, RESULT> usecase,
-      {void Function(RESULT) onSuccess, String Function(String) onError}) {
+  Future<void> exec<PARAM, RESULT>(PARAM param, IUseCase<PARAM, RESULT> usecase,
+      {void Function(RESULT) onSuccess,
+      String Function(String) onError,
+      Duration waitIfHaveMoreCalls}) {
     return _$execAsyncAction.run(() => super.exec<PARAM, RESULT>(param, usecase,
-        onSuccess: onSuccess, onError: onError));
+        onSuccess: onSuccess,
+        onError: onError,
+        waitIfHaveMoreCalls: waitIfHaveMoreCalls));
   }
 
   final _$_BaseControllerControllerBaseActionController =

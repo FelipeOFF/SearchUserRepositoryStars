@@ -13,7 +13,6 @@ class GitHubUseCase extends IUseCase<String, QueryGithubUserRepositoryStars> {
   Future<QueryGithubUserRepositoryStars> execute(String value) async {
     QueryResult result = await _repository.getQueryGithubUserRepositoryStars(value);
     if (result.hasException) {
-      print(result.exception);
       throw ServerException(result.exception.clientException.message);
     } else {
       return QueryGithubUserRepositoryStars.fromJson(result.data);

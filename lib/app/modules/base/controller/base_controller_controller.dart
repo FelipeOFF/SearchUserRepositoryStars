@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:github_repository_stars/app/modules/domain/exceptions/server_exception.dart';
 import 'package:github_repository_stars/app/modules/domain/i_use_case.dart';
 import 'package:github_repository_stars/app/modules/domain/result_wrapper.dart';
@@ -8,6 +10,8 @@ part 'base_controller_controller.g.dart';
 class BaseControllerController = _BaseControllerControllerBase with _$BaseControllerController;
 
 abstract class _BaseControllerControllerBase with Store {
+  StreamSubscription _subscription;
+
   @observable
   bool showLoading = false;
 
@@ -25,7 +29,7 @@ abstract class _BaseControllerControllerBase with Store {
   }
 
   @action
-  exec<PARAM, RESULT>(
+  Future<void> _executor<PARAM, RESULT>(
     PARAM param,
     IUseCase<PARAM, RESULT> usecase, {
     void Function(RESULT) onSuccess,
@@ -45,6 +49,26 @@ abstract class _BaseControllerControllerBase with Store {
       } else {
         _resolveError(onError);
       }
+    }
+  }
+
+  @action
+  Future<void> exec<PARAM, RESULT>(
+    PARAM param,
+    IUseCase<PARAM, RESULT> usecase, {
+    void Function(RESULT) onSuccess,
+    String Function(String) onError,
+    Duration waitIfHaveMoreCalls,
+  }) async {
+    if (waitIfHaveMoreCalls != null) {
+      if (_subscription != null) {
+        _subscription.cancel();
+      }
+      _subscription = Future.delayed(waitIfHaveMoreCalls).asStream().listen((event) async {
+        await _executor(param, usecase, onSuccess: onSuccess, onError: onError);
+      });
+    } else {
+      await _executor(param, usecase, onSuccess: onSuccess, onError: onError);
     }
   }
 
