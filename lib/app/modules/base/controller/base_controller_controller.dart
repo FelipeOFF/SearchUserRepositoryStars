@@ -44,10 +44,13 @@ abstract class _BaseControllerControllerBase with Store {
         setShowLoadin(true);
       } else if (event is DismissLoading) {
         setShowLoadin(false);
-      } else if (event is Failure<RESULT> && event.error is ServerException) {
-        _resolveError(onError, (event.error as ServerException).message);
-      } else {
-        _resolveError(onError);
+      } else if (event is Failure<RESULT>) {
+        var error = event.error;
+        if (error is ServerException) {
+          _resolveError(onError, error.message);
+        } else {
+          _resolveError(onError);
+        }
       }
     }
   }
@@ -58,6 +61,7 @@ abstract class _BaseControllerControllerBase with Store {
     IUseCase<PARAM, RESULT> usecase, {
     void Function(RESULT) onSuccess,
     String Function(String) onError,
+    void Function() onInitProcessiong,
     Duration waitIfHaveMoreCalls,
   }) async {
     if (waitIfHaveMoreCalls != null) {
@@ -65,9 +69,11 @@ abstract class _BaseControllerControllerBase with Store {
         _subscription.cancel();
       }
       _subscription = Future.delayed(waitIfHaveMoreCalls).asStream().listen((event) async {
+        onInitProcessiong?.call();
         await _executor(param, usecase, onSuccess: onSuccess, onError: onError);
       });
     } else {
+      onInitProcessiong?.call();
       await _executor(param, usecase, onSuccess: onSuccess, onError: onError);
     }
   }
@@ -78,7 +84,7 @@ abstract class _BaseControllerControllerBase with Store {
       error = onError(error);
     }
     if (error != null) {
-      setErroMessage(error);
+      setErroMessage(error != null ? error : "Ops...");
     }
   }
 }

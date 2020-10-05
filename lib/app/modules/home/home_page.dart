@@ -23,7 +23,7 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
       body: Container(
         color: Colors.grey.shade200,
         child: Observer(builder: (context) {
-          if (controller.showLoading) {
+          if (controller.showLoading && controller.query == null) {
             return Center(
               child: CircularProgressIndicator(),
             );
@@ -33,12 +33,26 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
             );
           } else if (controller.query != null) {
             QueryGithubUserRepositoryStars query = controller.query;
-            return ListView.builder(
-              itemCount: query.search.edges.length,
-              physics: BouncingScrollPhysics(),
-              itemBuilder: (widgetContext, index) {
-                return GitHubUserCard(user: controller.query.search.edges[index].node);
-              },
+            return NotificationListener<ScrollNotification>(
+              onNotification: (ScrollNotification scrollInfo) => checkIsActivePagination(scrollInfo, query),
+              child: ListView.builder(
+                itemCount: query.search.edges.length,
+                physics: BouncingScrollPhysics(),
+                itemBuilder: (widgetContext, index) {
+                  Edges edge = controller.query.search.edges[index];
+
+                  if (edge is EdgeLoad) {
+                    return Padding(
+                      padding: const EdgeInsets.only(top: 10.0),
+                      child: Center(child: CircularProgressIndicator()),
+                    );
+                  } else if (edge is EdgesUser) {
+                    return GitHubUserCard(user: edge.node);
+                  } else {
+                    throw Exception("Edge is not user and not Load, who is Edge?");
+                  }
+                },
+              ),
             );
           }
 
@@ -46,6 +60,15 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
         }),
       ),
     );
+  }
+
+  bool checkIsActivePagination(ScrollNotification scrollInfo, QueryGithubUserRepositoryStars query) {
+    if (!controller.showLoading) {
+      if (scrollInfo.metrics.pixels == scrollInfo.metrics.maxScrollExtent && query.search.pageInfo.hasNextPage) {
+        controller.goToNextPage();
+      }
+    }
+    return true;
   }
 
   Widget getGithubAppBar() => AppBar(

@@ -59,10 +59,12 @@ mixin _$BaseControllerController on _BaseControllerControllerBase, Store {
   Future<void> exec<PARAM, RESULT>(PARAM param, IUseCase<PARAM, RESULT> usecase,
       {void Function(RESULT) onSuccess,
       String Function(String) onError,
+      void Function() onInitProcessiong,
       Duration waitIfHaveMoreCalls}) {
     return _$execAsyncAction.run(() => super.exec<PARAM, RESULT>(param, usecase,
         onSuccess: onSuccess,
         onError: onError,
+        onInitProcessiong: onInitProcessiong,
         waitIfHaveMoreCalls: waitIfHaveMoreCalls));
   }
 

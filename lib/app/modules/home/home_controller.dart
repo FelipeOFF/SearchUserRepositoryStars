@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:github_repository_stars/app/modules/base/controller/base_controller_controller.dart';
 import 'package:github_repository_stars/app/modules/domain/usecase/github_usecase.dart';
 import 'package:github_repository_stars/app/modules/model/query_repository_stars.dart';
+import 'package:github_repository_stars/app/modules/model/search_model.dart';
 import 'package:mobx/mobx.dart';
 
 part 'home_controller.g.dart';
@@ -20,18 +21,45 @@ abstract class _HomeControllerBase extends BaseControllerController with Store {
   @observable
   QueryGithubUserRepositoryStars query;
 
+  @observable
+  String searchValue;
+
   @action
   togleShowSearchBar() {
     showSearchBar = !showSearchBar;
   }
 
   @action
-  search(String name) async {
+  goToNextPage() async {
     await exec(
-      name,
+      SearchModel(searchValue, afterCursor: query.search.pageInfo.endCursor),
       _gitHubUseCase,
-      onSuccess: (query) => this.query = query,
+      onSuccess: paginationValues,
       waitIfHaveMoreCalls: Duration(seconds: 1),
     );
+  }
+
+  @action
+  search(String name) async {
+    searchValue = name != null ? name : searchValue;
+    await exec(
+      SearchModel(searchValue),
+      _gitHubUseCase,
+      onSuccess: paginationValues,
+      onInitProcessiong: () => query = null,
+      waitIfHaveMoreCalls: Duration(seconds: 1),
+    );
+  }
+
+  void paginationValues(query) {
+    List<Edges> currentSearchEdges = this.query?.search?.edges ?? [];
+    currentSearchEdges.removeWhere((element) => element is EdgeLoad);
+    if (query.search.pageInfo.hasNextPage) {
+      List<Edges> edges = query.search.edges;
+      currentSearchEdges.addAll(edges);
+      currentSearchEdges.add(EdgeLoad());
+      query.search.edges = currentSearchEdges;
+    }
+    this.query = query;
   }
 }

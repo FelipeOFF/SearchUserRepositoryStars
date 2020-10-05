@@ -39,6 +39,29 @@ mixin _$HomeController on _HomeControllerBase, Store {
     });
   }
 
+  final _$searchValueAtom = Atom(name: '_HomeControllerBase.searchValue');
+
+  @override
+  String get searchValue {
+    _$searchValueAtom.reportRead();
+    return super.searchValue;
+  }
+
+  @override
+  set searchValue(String value) {
+    _$searchValueAtom.reportWrite(value, super.searchValue, () {
+      super.searchValue = value;
+    });
+  }
+
+  final _$goToNextPageAsyncAction =
+      AsyncAction('_HomeControllerBase.goToNextPage');
+
+  @override
+  Future goToNextPage() {
+    return _$goToNextPageAsyncAction.run(() => super.goToNextPage());
+  }
+
   final _$searchAsyncAction = AsyncAction('_HomeControllerBase.search');
 
   @override
@@ -64,7 +87,8 @@ mixin _$HomeController on _HomeControllerBase, Store {
   String toString() {
     return '''
 showSearchBar: ${showSearchBar},
-query: ${query}
+query: ${query},
+searchValue: ${searchValue}
     ''';
   }
 }

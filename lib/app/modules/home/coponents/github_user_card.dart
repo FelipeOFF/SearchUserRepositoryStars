@@ -18,8 +18,8 @@ class GitHubUserCard extends StatelessWidget {
       child: Card(
         shape: RoundedRectangleBorder(
           borderRadius: const BorderRadius.only(
-            topLeft: const Radius.circular(26),
-            bottomRight: const Radius.circular(26),
+            topLeft: const Radius.circular(50),
+            bottomRight: const Radius.circular(50),
           ),
         ),
         elevation: 2,
@@ -39,46 +39,50 @@ class GitHubUserCard extends StatelessWidget {
                     children: [
                       Expanded(
                         flex: 3,
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(100),
-                          child: Image.network(
-                            user.avatarUrl,
+                        child: Padding(
+                          padding: const EdgeInsets.only(right: 5),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(100),
+                            child: Image.network(
+                              user.avatarUrl,
+                            ),
                           ),
                         ),
                       ),
                       Expanded(
                         flex: 7,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Container(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  makeLoginText(),
-                                  Padding(
-                                    padding:
-                                        const EdgeInsets.symmetric(vertical: 5),
-                                    child: makeBioText(),
-                                  ),
-                                ],
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 5),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Container(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    makeLoginText(),
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(vertical: 5),
+                                      child: makeBioText(),
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                            Container(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  Padding(
-                                    padding:
-                                        const EdgeInsets.symmetric(vertical: 5),
-                                    child: makeEmailText(),
-                                  ),
-                                  makeLocationText(),
-                                ],
+                              Container(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(vertical: 5),
+                                      child: makeEmailText(),
+                                    ),
+                                    makeLocationText(),
+                                  ],
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                     ],

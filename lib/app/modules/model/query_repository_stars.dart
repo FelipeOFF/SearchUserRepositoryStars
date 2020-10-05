@@ -24,7 +24,7 @@ class QueryGithubUserRepositoryStars {
 class Search {
   int _userCount;
   PageInfo _pageInfo;
-  List<EdgesUser> _edges;
+  List<Edges> _edges;
 
   Search({int userCount, PageInfo pageInfo, List<EdgesUser> edges}) {
     this._userCount = userCount;
@@ -36,14 +36,14 @@ class Search {
   set userCount(int userCount) => _userCount = userCount;
   PageInfo get pageInfo => _pageInfo;
   set pageInfo(PageInfo pageInfo) => _pageInfo = pageInfo;
-  List<EdgesUser> get edges => _edges;
-  set edges(List<EdgesUser> edges) => _edges = edges;
+  List<Edges> get edges => _edges;
+  set edges(List<Edges> edges) => _edges = edges;
 
   Search.fromJson(Map<String, dynamic> json) {
     _userCount = json['userCount'];
     _pageInfo = json['pageInfo'] != null ? new PageInfo.fromJson(json['pageInfo']) : null;
     if (json['edges'] != null) {
-      _edges = new List<EdgesUser>();
+      _edges = new List<Edges>();
       json['edges'].forEach((v) {
         _edges.add(new EdgesUser.fromJson(v));
       });
@@ -57,7 +57,9 @@ class Search {
       data['pageInfo'] = this._pageInfo.toJson();
     }
     if (this._edges != null) {
-      data['edges'] = this._edges.map((v) => v.toJson()).toList();
+      var listConverted = this._edges.map((v) => (v is EdgesUser) ? v.toJson() : null).toList();
+      listConverted.removeWhere((element) => element == null);
+      data['edges'] = listConverted;
     }
     return data;
   }
@@ -102,7 +104,11 @@ class PageInfo {
   }
 }
 
-class EdgesUser {
+abstract class Edges {}
+
+class EdgeLoad implements Edges {}
+
+class EdgesUser implements Edges {
   String _cursor;
   NodeUser _node;
 
@@ -131,7 +137,7 @@ class EdgesUser {
   }
 }
 
-class EdgesRepository {
+class EdgesRepository implements Edges {
   String _cursor;
   NodeRepository _node;
 
@@ -229,22 +235,22 @@ class NodeUser {
 
 class StarredRepositories {
   int _totalCount;
-  List<EdgesRepository> _edges;
+  List<Edges> _edges;
 
-  StarredRepositories({int totalCount, List<EdgesRepository> edges}) {
+  StarredRepositories({int totalCount, List<Edges> edges}) {
     this._totalCount = totalCount;
     this._edges = edges;
   }
 
   int get totalCount => _totalCount;
   set totalCount(int totalCount) => _totalCount = totalCount;
-  List<EdgesRepository> get edges => _edges;
-  set edges(List<EdgesRepository> edges) => _edges = edges;
+  List<Edges> get edges => _edges;
+  set edges(List<Edges> edges) => _edges = edges;
 
   StarredRepositories.fromJson(Map<String, dynamic> json) {
     _totalCount = json['totalCount'];
     if (json['edges'] != null) {
-      _edges = new List<EdgesRepository>();
+      _edges = new List<Edges>();
       json['edges'].forEach((v) {
         _edges.add(new EdgesRepository.fromJson(v));
       });
@@ -255,7 +261,9 @@ class StarredRepositories {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['totalCount'] = this._totalCount;
     if (this._edges != null) {
-      data['edges'] = this._edges.map((v) => v.toJson()).toList();
+      var listConverted = this._edges.map((v) => (v is EdgesRepository) ? v.toJson() : null).toList();
+      listConverted.removeWhere((element) => element == null);
+      data['edges'] = listConverted;
     }
     return data;
   }
