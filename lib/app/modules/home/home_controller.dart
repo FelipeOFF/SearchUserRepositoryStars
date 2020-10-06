@@ -34,7 +34,7 @@ abstract class _HomeControllerBase extends BaseControllerController with Store {
     await exec(
       SearchModel(searchValue, afterCursor: query.search.pageInfo.endCursor),
       _gitHubUseCase,
-      onSuccess: paginationValues,
+      onSuccess: _paginationValues,
       waitIfHaveMoreCalls: Duration(seconds: 1),
     );
   }
@@ -45,13 +45,13 @@ abstract class _HomeControllerBase extends BaseControllerController with Store {
     await exec(
       SearchModel(searchValue),
       _gitHubUseCase,
-      onSuccess: paginationValues,
+      onSuccess: _paginationValues,
       onInitProcessiong: () => query = null,
       waitIfHaveMoreCalls: Duration(seconds: 1),
     );
   }
 
-  void paginationValues(query) {
+  void _paginationValues(query) {
     List<Edges> currentSearchEdges = this.query?.search?.edges ?? [];
     currentSearchEdges.removeWhere((element) => element is EdgeLoad);
     if (query.search.pageInfo.hasNextPage) {

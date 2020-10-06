@@ -16,6 +16,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends ModularState<HomePage, HomeController> {
   //use 'controller' variable to access controller
 
+  final FocusNode _focusNode = FocusNode();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -73,7 +75,11 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
 
   Widget getGithubAppBar() => AppBar(
         title: Observer(
-          builder: (context) => makeTextFieldForSearch(),
+          builder: (context) {
+            Widget widget = makeTextFieldForSearch();
+            _focusNode.requestFocus();
+            return widget;
+          },
         ),
         actions: [
           Observer(builder: (context) => makeIconButtonForSearch()),
@@ -108,6 +114,7 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
         style: TextStyle(
           color: Colors.white,
         ),
+        focusNode: _focusNode,
         decoration: InputDecoration(
           prefixIcon: Icon(
             Icons.search,
