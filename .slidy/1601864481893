@@ -1,0 +1,5 @@
+lib/app/modules/github_repository_stars/github_repository_stars_module.dart
+lib/app/modules/github_repository_stars/github_repository_stars_page.dart
+test/app/modules/github_repository_stars/github_repository_stars_page_test.dart
+lib/app/modules/github_repository_stars/github_repository_stars_controller.dart
+test/app/modules/github_repository_stars/github_repository_stars_controller_test.dart

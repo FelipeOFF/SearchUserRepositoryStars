@@ -1,0 +1,5 @@
+lib/app/modules/user_repository/user_repository_module.dart
+lib/app/modules/user_repository/user_repository_page.dart
+test/app/modules/user_repository/user_repository_page_test.dart
+lib/app/modules/user_repository/user_repository_controller.dart
+test/app/modules/user_repository/user_repository_controller_test.dart

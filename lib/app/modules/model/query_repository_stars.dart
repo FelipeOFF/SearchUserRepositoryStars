@@ -1,173 +1,150 @@
 class QueryGithubUserRepositoryStars {
-  Search _search;
+  Search search;
 
   QueryGithubUserRepositoryStars({Search search}) {
-    this._search = search;
+    this.search = search;
   }
 
-  Search get search => _search;
-  set search(Search search) => _search = search;
-
   QueryGithubUserRepositoryStars.fromJson(Map<String, dynamic> json) {
-    _search = json['search'] != null ? new Search.fromJson(json['search']) : null;
+    search = json['search'] != null ? new Search.fromJson(json['search']) : null;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this._search != null) {
-      data['search'] = this._search.toJson();
+    if (this.search != null) {
+      data['search'] = this.search.toJson();
     }
     return data;
   }
 }
 
 class Search {
-  int _userCount;
-  PageInfo _pageInfo;
-  List<EdgesUser> _edges;
+  int userCount;
+  PageInfo pageInfo;
+  List<Edges> edges;
 
   Search({int userCount, PageInfo pageInfo, List<EdgesUser> edges}) {
-    this._userCount = userCount;
-    this._pageInfo = pageInfo;
-    this._edges = edges;
+    this.userCount = userCount;
+    this.pageInfo = pageInfo;
+    this.edges = edges;
   }
 
-  int get userCount => _userCount;
-  set userCount(int userCount) => _userCount = userCount;
-  PageInfo get pageInfo => _pageInfo;
-  set pageInfo(PageInfo pageInfo) => _pageInfo = pageInfo;
-  List<EdgesUser> get edges => _edges;
-  set edges(List<EdgesUser> edges) => _edges = edges;
-
   Search.fromJson(Map<String, dynamic> json) {
-    _userCount = json['userCount'];
-    _pageInfo = json['pageInfo'] != null ? new PageInfo.fromJson(json['pageInfo']) : null;
+    userCount = json['userCount'];
+    pageInfo = json['pageInfo'] != null ? new PageInfo.fromJson(json['pageInfo']) : null;
     if (json['edges'] != null) {
-      _edges = new List<EdgesUser>();
+      edges = new List<Edges>();
       json['edges'].forEach((v) {
-        _edges.add(new EdgesUser.fromJson(v));
+        edges.add(new EdgesUser.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['userCount'] = this._userCount;
-    if (this._pageInfo != null) {
-      data['pageInfo'] = this._pageInfo.toJson();
+    data['userCount'] = this.userCount;
+    if (this.pageInfo != null) {
+      data['pageInfo'] = this.pageInfo.toJson();
     }
-    if (this._edges != null) {
-      data['edges'] = this._edges.map((v) => v.toJson()).toList();
+    if (this.edges != null) {
+      var listConverted = this.edges.map((v) => (v is EdgesUser) ? v.toJson() : null).toList();
+      listConverted.removeWhere((element) => element == null);
+      data['edges'] = listConverted;
     }
     return data;
   }
 }
 
 class PageInfo {
-  String _startCursor;
-  bool _hasNextPage;
-  bool _hasPreviousPage;
-  String _endCursor;
+  String startCursor;
+  bool hasNextPage;
+  bool hasPreviousPage;
+  String endCursor;
 
   PageInfo({String startCursor, bool hasNextPage, bool hasPreviousPage, String endCursor}) {
-    this._startCursor = startCursor;
-    this._hasNextPage = hasNextPage;
-    this._hasPreviousPage = hasPreviousPage;
-    this._endCursor = endCursor;
+    this.startCursor = startCursor;
+    this.hasNextPage = hasNextPage;
+    this.hasPreviousPage = hasPreviousPage;
+    this.endCursor = endCursor;
   }
 
-  String get startCursor => _startCursor;
-  set startCursor(String startCursor) => _startCursor = startCursor;
-  bool get hasNextPage => _hasNextPage;
-  set hasNextPage(bool hasNextPage) => _hasNextPage = hasNextPage;
-  bool get hasPreviousPage => _hasPreviousPage;
-  set hasPreviousPage(bool hasPreviousPage) => _hasPreviousPage = hasPreviousPage;
-  String get endCursor => _endCursor;
-  set endCursor(String endCursor) => _endCursor = endCursor;
-
   PageInfo.fromJson(Map<String, dynamic> json) {
-    _startCursor = json['startCursor'];
-    _hasNextPage = json['hasNextPage'];
-    _hasPreviousPage = json['hasPreviousPage'];
-    _endCursor = json['endCursor'];
+    startCursor = json['startCursor'];
+    hasNextPage = json['hasNextPage'];
+    hasPreviousPage = json['hasPreviousPage'];
+    endCursor = json['endCursor'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['startCursor'] = this._startCursor;
-    data['hasNextPage'] = this._hasNextPage;
-    data['hasPreviousPage'] = this._hasPreviousPage;
-    data['endCursor'] = this._endCursor;
+    data['startCursor'] = this.startCursor;
+    data['hasNextPage'] = this.hasNextPage;
+    data['hasPreviousPage'] = this.hasPreviousPage;
+    data['endCursor'] = this.endCursor;
     return data;
   }
 }
 
-class EdgesUser {
-  String _cursor;
-  NodeUser _node;
+abstract class Edges {}
+
+class EdgeLoad implements Edges {}
+
+class EdgesUser implements Edges {
+  String cursor;
+  NodeUser node;
 
   EdgesUser({String cursor, NodeUser node}) {
-    this._cursor = cursor;
-    this._node = node;
+    this.cursor = cursor;
+    this.node = node;
   }
 
-  String get cursor => _cursor;
-  set cursor(String cursor) => _cursor = cursor;
-  NodeUser get node => _node;
-  set node(NodeUser node) => _node = node;
-
   EdgesUser.fromJson(Map<String, dynamic> json) {
-    _cursor = json['cursor'];
-    _node = json['node'] != null ? new NodeUser.fromJson(json['node']) : null;
+    cursor = json['cursor'];
+    node = json['node'] != null ? new NodeUser.fromJson(json['node']) : null;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['cursor'] = this._cursor;
-    if (this._node != null) {
-      data['node'] = this._node.toJson();
+    data['cursor'] = this.cursor;
+    if (this.node != null) {
+      data['node'] = this.node.toJson();
     }
     return data;
   }
 }
 
-class EdgesRepository {
-  String _cursor;
-  NodeRepository _node;
+class EdgesRepository implements Edges {
+  String cursor;
+  NodeRepository node;
 
   EdgesRepository({String cursor, NodeRepository node}) {
-    this._cursor = cursor;
-    this._node = node;
+    this.cursor = cursor;
+    this.node = node;
   }
 
-  String get cursor => _cursor;
-  set cursor(String cursor) => _cursor = cursor;
-  NodeRepository get node => _node;
-  set node(NodeRepository node) => _node = node;
-
   EdgesRepository.fromJson(Map<String, dynamic> json) {
-    _cursor = json['cursor'];
-    _node = json['node'] != null ? new NodeRepository.fromJson(json['node']) : null;
+    cursor = json['cursor'];
+    node = json['node'] != null ? new NodeRepository.fromJson(json['node']) : null;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['cursor'] = this._cursor;
-    if (this._node != null) {
-      data['node'] = this._node.toJson();
+    data['cursor'] = this.cursor;
+    if (this.node != null) {
+      data['node'] = this.node.toJson();
     }
     return data;
   }
 }
 
 class NodeUser {
-  String _avatarUrl;
-  String _login;
-  String _bio;
-  String _location;
-  String _email;
-  String _url;
-  StarredRepositories _starredRepositories;
+  String avatarUrl;
+  String login;
+  String bio;
+  String location;
+  String email;
+  String url;
+  StarredRepositories starredRepositories;
 
   NodeUser(
       {String avatarUrl,
@@ -177,125 +154,98 @@ class NodeUser {
       String email,
       String url,
       StarredRepositories starredRepositories}) {
-    this._avatarUrl = avatarUrl;
-    this._login = login;
-    this._bio = bio;
-    this._location = location;
-    this._email = email;
-    this._url = url;
-    this._starredRepositories = starredRepositories;
+    this.avatarUrl = avatarUrl;
+    this.login = login;
+    this.bio = bio;
+    this.location = location;
+    this.email = email;
+    this.url = url;
+    this.starredRepositories = starredRepositories;
   }
 
-  String get avatarUrl => _avatarUrl;
-  set avatarUrl(String avatarUrl) => _avatarUrl = avatarUrl;
-  String get login => _login;
-  set login(String login) => _login = login;
-  String get bio => _bio;
-  set bio(String bio) => _bio = bio;
-  String get location => _location;
-  set location(String location) => _location = location;
-  String get email => _email;
-  set email(String email) => _email = email;
-  String get url => _url;
-  set url(String url) => _url = url;
-  StarredRepositories get starredRepositories => _starredRepositories;
-  set starredRepositories(StarredRepositories starredRepositories) => _starredRepositories = starredRepositories;
-
   NodeUser.fromJson(Map<String, dynamic> json) {
-    _avatarUrl = json['avatarUrl'];
-    _login = json['login'];
-    _bio = json['bio'];
-    _location = json['location'];
-    _email = json['email'];
-    _url = json['url'];
-    _starredRepositories =
+    avatarUrl = json['avatarUrl'];
+    login = json['login'];
+    bio = json['bio'];
+    location = json['location'];
+    email = json['email'];
+    url = json['url'];
+    starredRepositories =
         json['starredRepositories'] != null ? new StarredRepositories.fromJson(json['starredRepositories']) : null;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['avatarUrl'] = this._avatarUrl;
-    data['login'] = this._login;
-    data['bio'] = this._bio;
-    data['location'] = this._location;
-    data['email'] = this._email;
-    data['url'] = this._url;
-    if (this._starredRepositories != null) {
-      data['starredRepositories'] = this._starredRepositories.toJson();
+    data['avatarUrl'] = this.avatarUrl;
+    data['login'] = this.login;
+    data['bio'] = this.bio;
+    data['location'] = this.location;
+    data['email'] = this.email;
+    data['url'] = this.url;
+    if (this.starredRepositories != null) {
+      data['starredRepositories'] = this.starredRepositories.toJson();
     }
     return data;
   }
 }
 
 class StarredRepositories {
-  int _totalCount;
-  List<EdgesRepository> _edges;
+  int totalCount;
+  List<Edges> edges;
 
-  StarredRepositories({int totalCount, List<EdgesRepository> edges}) {
-    this._totalCount = totalCount;
-    this._edges = edges;
+  StarredRepositories({int totalCount, List<Edges> edges}) {
+    this.totalCount = totalCount;
+    this.edges = edges;
   }
 
-  int get totalCount => _totalCount;
-  set totalCount(int totalCount) => _totalCount = totalCount;
-  List<EdgesRepository> get edges => _edges;
-  set edges(List<EdgesRepository> edges) => _edges = edges;
-
   StarredRepositories.fromJson(Map<String, dynamic> json) {
-    _totalCount = json['totalCount'];
+    totalCount = json['totalCount'];
     if (json['edges'] != null) {
-      _edges = new List<EdgesRepository>();
+      edges = new List<Edges>();
       json['edges'].forEach((v) {
-        _edges.add(new EdgesRepository.fromJson(v));
+        edges.add(new EdgesRepository.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['totalCount'] = this._totalCount;
-    if (this._edges != null) {
-      data['edges'] = this._edges.map((v) => v.toJson()).toList();
+    data['totalCount'] = this.totalCount;
+    if (this.edges != null) {
+      var listConverted = this.edges.map((v) => (v is EdgesRepository) ? v.toJson() : null).toList();
+      listConverted.removeWhere((element) => element == null);
+      data['edges'] = listConverted;
     }
     return data;
   }
 }
 
 class NodeRepository {
-  String _name;
-  String _description;
-  int _stargazerCount;
-  String _url;
+  String name;
+  String description;
+  int stargazerCount;
+  String url;
 
-  Node({String name, String description, int stargazerCount, String url}) {
-    this._name = name;
-    this._description = description;
-    this._stargazerCount = stargazerCount;
-    this._url = url;
+  NodeRepository({String name, String description, int stargazerCount, String url}) {
+    this.name = name;
+    this.description = description;
+    this.stargazerCount = stargazerCount;
+    this.url = url;
   }
 
-  String get name => _name;
-  set name(String name) => _name = name;
-  String get description => _description;
-  set description(String description) => _description = description;
-  int get stargazerCount => _stargazerCount;
-  set stargazerCount(int stargazerCount) => _stargazerCount = stargazerCount;
-  String get url => _url;
-  set url(String url) => _url = url;
-
   NodeRepository.fromJson(Map<String, dynamic> json) {
-    _name = json['name'];
-    _description = json['description'];
-    _stargazerCount = json['stargazerCount'];
-    _url = json['url'];
+    name = json['name'];
+    description = json['description'];
+    stargazerCount = json['stargazerCount'];
+    url = json['url'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['name'] = this._name;
-    data['description'] = this._description;
-    data['stargazerCount'] = this._stargazerCount;
-    data['url'] = this._url;
+    data['name'] = this.name;
+    data['description'] = this.description;
+    data['stargazerCount'] = this.stargazerCount;
+    data['url'] = this.url;
     return data;
   }
 }
