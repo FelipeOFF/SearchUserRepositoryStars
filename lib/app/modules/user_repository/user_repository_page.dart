@@ -52,11 +52,7 @@ class _UserRepositoryPageState extends ModularState<UserRepositoryPage, UserRepo
                       title: Text(edges.node.name),
                       subtitle: Padding(
                         padding: const EdgeInsets.only(top: 10),
-                        child: Text(
-                          edges.node.description,
-                          maxLines: 4,
-                          overflow: TextOverflow.ellipsis,
-                        ),
+                        child: _makeDescription(edges),
                       ),
                       trailing: Column(
                         children: [
@@ -75,4 +71,12 @@ class _UserRepositoryPageState extends ModularState<UserRepositoryPage, UserRepo
       ),
     );
   }
+
+  StatelessWidget _makeDescription(EdgesRepository edges) => edges.node.description != null
+      ? Text(
+          edges.node.description,
+          maxLines: 4,
+          overflow: TextOverflow.ellipsis,
+        )
+      : Container();
 }

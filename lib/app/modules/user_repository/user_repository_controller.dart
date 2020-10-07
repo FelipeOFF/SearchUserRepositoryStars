@@ -14,6 +14,14 @@ abstract class _UserRepositoryControllerBase extends BaseControllerController wi
 
   @action
   void addUser(NodeUser nodeUser) {
+    nodeUser.starredRepositories.edges =
+        nodeUser.starredRepositories.edges.fold<List<EdgesRepository>>(<EdgesRepository>[], (previousValue, element) {
+      if (element is EdgesRepository) {
+        previousValue.add(element);
+      }
+      return previousValue;
+    }).toList()
+          ..sort((repA, repB) => repB.node.stargazerCount.compareTo(repA.node.stargazerCount));
     this.nodeUser = nodeUser;
   }
 }

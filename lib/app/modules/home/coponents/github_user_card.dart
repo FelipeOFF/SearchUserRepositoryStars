@@ -26,11 +26,11 @@ class GitHubUserCard extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Expanded(
-                  flex: 7,
+                  flex: 5,
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -70,23 +70,26 @@ class GitHubUserCard extends StatelessWidget {
                                   ],
                                 ),
                               ),
-                              Container(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(vertical: 5),
-                                      child: makeEmailText(),
-                                    ),
-                                    makeLocationText(),
-                                  ],
-                                ),
-                              ),
                             ],
                           ),
                         ),
                       ),
                     ],
+                  ),
+                ),
+                Expanded(
+                  flex: 2,
+                  child: Container(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 5),
+                          child: makeEmailText(),
+                        ),
+                        makeLocationText(),
+                      ],
+                    ),
                   ),
                 ),
                 Expanded(
@@ -139,17 +142,17 @@ class GitHubUserCard extends StatelessWidget {
     );
   }
 
-  Widget makeEmailText() => makeTextForBioEmailAndLocation(user.email);
+  Widget makeEmailText() => makeTextForBioEmailAndLocation(user.email, maxLines: 1);
 
   Widget makeLocationText() => makeTextForBioEmailAndLocation(user.location);
 
   Widget makeBioText() => makeTextForBioEmailAndLocation(user.bio);
 
-  Widget makeTextForBioEmailAndLocation(String value) => value != null
+  Widget makeTextForBioEmailAndLocation(String value, {int maxLines = 4}) => value != null
       ? Text(
           value,
           textAlign: TextAlign.end,
-          maxLines: 4,
+          maxLines: maxLines,
           overflow: TextOverflow.ellipsis,
           style: TextStyle(
             color: Colors.grey.shade700,
