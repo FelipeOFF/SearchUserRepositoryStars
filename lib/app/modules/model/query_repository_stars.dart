@@ -1,4 +1,6 @@
-class QueryGithubUserRepositoryStars {
+import 'package:equatable/equatable.dart';
+
+class QueryGithubUserRepositoryStars extends Equatable {
   Search search;
 
   QueryGithubUserRepositoryStars({Search search}) {
@@ -16,6 +18,9 @@ class QueryGithubUserRepositoryStars {
     }
     return data;
   }
+
+  @override
+  List<Object> get props => [search];
 }
 
 class Search {
