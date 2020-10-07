@@ -7,6 +7,7 @@ import 'package:github_repository_stars/app/modules/home/home_module.dart';
 import 'package:github_repository_stars/app/modules/network/client/graphql_client.dart';
 import 'package:github_repository_stars/app/modules/repository/github_repository.dart';
 import 'package:github_repository_stars/app/modules/repository/i_github_repository.dart';
+import 'package:github_repository_stars/app/modules/user_repository/user_repository_module.dart';
 import 'package:graphql/client.dart';
 
 class AppModule extends MainModule {
@@ -21,6 +22,7 @@ class AppModule extends MainModule {
   @override
   List<ModularRouter> get routers => [
         ModularRouter(Modular.initialRoute, module: HomeModule()),
+        ModularRouter("/user_repository", module: UserRepositoryModule()),
       ];
 
   @override

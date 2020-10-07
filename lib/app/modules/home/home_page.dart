@@ -49,7 +49,13 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
                       child: Center(child: CircularProgressIndicator()),
                     );
                   } else if (edge is EdgesUser) {
-                    return GitHubUserCard(user: edge.node);
+                    return GitHubUserCard(
+                      user: edge.node,
+                      onShowRepository: () {
+                        controller.showSearchBar = false;
+                        Navigator.pushNamed(context, "/user_repository", arguments: edge.node);
+                      },
+                    );
                   } else {
                     throw Exception("Edge is not user and not Load, who is Edge?");
                   }
@@ -76,9 +82,7 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
   Widget getGithubAppBar() => AppBar(
         title: Observer(
           builder: (context) {
-            Widget widget = makeTextFieldForSearch();
-            _focusNode.requestFocus();
-            return widget;
+            return makeTextFieldForSearch();
           },
         ),
         actions: [
@@ -110,6 +114,7 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
 
   Widget makeTextFieldForSearch() {
     if (controller.showSearchBar) {
+      _focusNode.requestFocus();
       return TextField(
         style: TextStyle(
           color: Colors.white,

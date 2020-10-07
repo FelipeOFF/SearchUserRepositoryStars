@@ -4,12 +4,10 @@ import 'package:github_repository_stars/app/modules/model/query_repository_stars
 import 'package:github_repository_stars/app/modules/util/url_util.dart';
 
 class GitHubUserCard extends StatelessWidget {
-  const GitHubUserCard({
-    Key key,
-    @required this.user,
-  }) : super(key: key);
+  const GitHubUserCard({Key key, @required this.user, @required this.onShowRepository}) : super(key: key);
 
   final NodeUser user;
+  final void Function() onShowRepository;
 
   @override
   Widget build(BuildContext context) {
@@ -43,8 +41,11 @@ class GitHubUserCard extends StatelessWidget {
                           padding: const EdgeInsets.only(right: 5),
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(100),
-                            child: Image.network(
-                              user.avatarUrl,
+                            child: Hero(
+                              tag: user.avatarUrl,
+                              child: Image.network(
+                                user.avatarUrl,
+                              ),
                             ),
                           ),
                         ),
@@ -97,7 +98,7 @@ class GitHubUserCard extends StatelessWidget {
                       Expanded(
                         child: FlatButton(
                           padding: const EdgeInsets.symmetric(horizontal: 5),
-                          onPressed: () {},
+                          onPressed: onShowRepository,
                           child: Text("Ver repositórios favoritos"),
                         ),
                       ),
