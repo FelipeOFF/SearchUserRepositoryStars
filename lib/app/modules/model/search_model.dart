@@ -1,11 +1,11 @@
 import 'package:equatable/equatable.dart';
 
 class SearchModel extends Equatable {
-  String search;
-  String afterCursor;
-  int count;
+  final String search;
+  final String afterCursor;
+  final int count;
 
-  SearchModel(this.search, {this.afterCursor, this.count = 20});
+  const SearchModel(this.search, {this.afterCursor, this.count = 20});
 
   @override
   List<Object> get props => [search, afterCursor, count];
