@@ -12,7 +12,7 @@ class Success<T> extends IResultWrapper<T> {
 }
 
 class Failure<T> extends IResultWrapper<T> {
-  final Exception error;
+  final Error error;
 
   Failure(this.error);
 

@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-class ServerException extends Equatable with Exception {
+class ServerException extends Error with EquatableMixin {
   final String message;
 
   ServerException(this.message);
