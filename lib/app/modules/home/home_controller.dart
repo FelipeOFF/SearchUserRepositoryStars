@@ -52,9 +52,9 @@ abstract class _HomeControllerBase extends BaseController with Store {
   }
 
   void _paginationValues(query) {
-    List<Edges> currentSearchEdges = this.query?.search?.edges ?? [];
+    List<Edges> currentSearchEdges = List.from(this.query?.search?.edges ?? []);
     currentSearchEdges.removeWhere((element) => element is EdgeLoad);
-    if (query.search.pageInfo.hasNextPage) {
+    if (query?.search?.pageInfo?.hasNextPage == true) {
       List<Edges> edges = query.search.edges;
       currentSearchEdges.addAll(edges);
       currentSearchEdges.add(EdgeLoad());
