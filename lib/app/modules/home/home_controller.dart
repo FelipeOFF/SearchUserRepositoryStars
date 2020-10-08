@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:github_repository_stars/app/modules/base/controller/base_controller_controller.dart';
+import 'package:github_repository_stars/app/modules/base/controller/base_controller.dart';
 import 'package:github_repository_stars/app/modules/domain/usecase/github_usecase.dart';
 import 'package:github_repository_stars/app/modules/model/query_repository_stars.dart';
 import 'package:github_repository_stars/app/modules/model/search_model.dart';
@@ -10,7 +10,7 @@ part 'home_controller.g.dart';
 
 class HomeController = _HomeControllerBase with _$HomeController;
 
-abstract class _HomeControllerBase extends BaseControllerController with Store {
+abstract class _HomeControllerBase extends BaseController with Store {
   final GitHubUseCase _gitHubUseCase;
 
   _HomeControllerBase(this._gitHubUseCase);

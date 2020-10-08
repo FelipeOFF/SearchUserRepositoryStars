@@ -149,7 +149,24 @@ const SearchRepositoriesStarsFromUsers = _i1.OperationDefinitionNode(
                                   name: _i1.NameNode(
                                       value: 'starredRepositories'),
                                   alias: null,
-                                  arguments: [],
+                                  arguments: [
+                                    _i1.ArgumentNode(
+                                        name: _i1.NameNode(value: 'orderBy'),
+                                        value: _i1.ObjectValueNode(fields: [
+                                          _i1.ObjectFieldNode(
+                                              name:
+                                                  _i1.NameNode(value: 'field'),
+                                              value: _i1.EnumValueNode(
+                                                  name: _i1.NameNode(
+                                                      value: 'STARRED_AT'))),
+                                          _i1.ObjectFieldNode(
+                                              name: _i1.NameNode(
+                                                  value: 'direction'),
+                                              value: _i1.EnumValueNode(
+                                                  name: _i1.NameNode(
+                                                      value: 'ASC')))
+                                        ]))
+                                  ],
                                   directives: [],
                                   selectionSet:
                                       _i1.SelectionSetNode(selections: [

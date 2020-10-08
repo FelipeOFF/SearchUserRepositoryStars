@@ -5,11 +5,11 @@ import 'package:github_repository_stars/app/modules/domain/i_use_case.dart';
 import 'package:github_repository_stars/app/modules/domain/result_wrapper.dart';
 import 'package:mobx/mobx.dart';
 
-part 'base_controller_controller.g.dart';
+part 'base_controller.g.dart';
 
-class BaseControllerController = _BaseControllerControllerBase with _$BaseControllerController;
+class BaseController = _BaseControllerBase with _$BaseController;
 
-abstract class _BaseControllerControllerBase with Store {
+abstract class _BaseControllerBase with Store {
   StreamSubscription _subscription;
 
   @observable
@@ -51,6 +51,8 @@ abstract class _BaseControllerControllerBase with Store {
         } else {
           _resolveError(onError);
         }
+      } else {
+        _resolveError(onError);
       }
     }
   }
@@ -83,8 +85,6 @@ abstract class _BaseControllerControllerBase with Store {
     if (onError != null) {
       error = onError(error);
     }
-    if (error != null) {
-      setErroMessage(error != null ? error : "Ops...");
-    }
+    setErroMessage(error != null ? error : "Ops...");
   }
 }

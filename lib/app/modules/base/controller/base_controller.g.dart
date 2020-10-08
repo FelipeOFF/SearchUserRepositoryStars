@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'base_controller_controller.dart';
+part of 'base_controller.dart';
 
 // **************************************************************************
 // StoreGenerator
@@ -8,9 +8,8 @@ part of 'base_controller_controller.dart';
 
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
-mixin _$BaseControllerController on _BaseControllerControllerBase, Store {
-  final _$showLoadingAtom =
-      Atom(name: '_BaseControllerControllerBase.showLoading');
+mixin _$BaseController on _BaseControllerBase, Store {
+  final _$showLoadingAtom = Atom(name: '_BaseControllerBase.showLoading');
 
   @override
   bool get showLoading {
@@ -25,8 +24,7 @@ mixin _$BaseControllerController on _BaseControllerControllerBase, Store {
     });
   }
 
-  final _$errorMessageAtom =
-      Atom(name: '_BaseControllerControllerBase.errorMessage');
+  final _$errorMessageAtom = Atom(name: '_BaseControllerBase.errorMessage');
 
   @override
   String get errorMessage {
@@ -41,8 +39,7 @@ mixin _$BaseControllerController on _BaseControllerControllerBase, Store {
     });
   }
 
-  final _$_executorAsyncAction =
-      AsyncAction('_BaseControllerControllerBase._executor');
+  final _$_executorAsyncAction = AsyncAction('_BaseControllerBase._executor');
 
   @override
   Future<void> _executor<PARAM, RESULT>(
@@ -53,7 +50,7 @@ mixin _$BaseControllerController on _BaseControllerControllerBase, Store {
         onSuccess: onSuccess, onError: onError));
   }
 
-  final _$execAsyncAction = AsyncAction('_BaseControllerControllerBase.exec');
+  final _$execAsyncAction = AsyncAction('_BaseControllerBase.exec');
 
   @override
   Future<void> exec<PARAM, RESULT>(PARAM param, IUseCase<PARAM, RESULT> usecase,
@@ -68,28 +65,28 @@ mixin _$BaseControllerController on _BaseControllerControllerBase, Store {
         waitIfHaveMoreCalls: waitIfHaveMoreCalls));
   }
 
-  final _$_BaseControllerControllerBaseActionController =
-      ActionController(name: '_BaseControllerControllerBase');
+  final _$_BaseControllerBaseActionController =
+      ActionController(name: '_BaseControllerBase');
 
   @override
   void setShowLoadin(bool value) {
-    final _$actionInfo = _$_BaseControllerControllerBaseActionController
-        .startAction(name: '_BaseControllerControllerBase.setShowLoadin');
+    final _$actionInfo = _$_BaseControllerBaseActionController.startAction(
+        name: '_BaseControllerBase.setShowLoadin');
     try {
       return super.setShowLoadin(value);
     } finally {
-      _$_BaseControllerControllerBaseActionController.endAction(_$actionInfo);
+      _$_BaseControllerBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   void setErroMessage(String value) {
-    final _$actionInfo = _$_BaseControllerControllerBaseActionController
-        .startAction(name: '_BaseControllerControllerBase.setErroMessage');
+    final _$actionInfo = _$_BaseControllerBaseActionController.startAction(
+        name: '_BaseControllerBase.setErroMessage');
     try {
       return super.setErroMessage(value);
     } finally {
-      _$_BaseControllerControllerBaseActionController.endAction(_$actionInfo);
+      _$_BaseControllerBaseActionController.endAction(_$actionInfo);
     }
   }
 
